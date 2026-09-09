@@ -1,56 +1,54 @@
 # Polybius Cipher Tool
 
-A simple Python 3 terminal app that implements the classical Polybius square cipher.
+A simple Python terminal app based on the **exact 5x5 Polybius grid shown in the workshop**.
 
-> **NOTE:** The Polybius cipher is a historical cipher and is **NOT secure** for modern use. This project is for educational purposes only.
+> **Educational only:** Polybius is a classical cipher and is NOT secure modern encryption.
 
-## What It Does
+## Grid
 
-- Encrypts text into numeric coordinates using a 5x5 Polybius square
-- Decrypts coordinates back into text
-- Shows the square and letter mappings
-- Demonstrates step-by-step encryption
-
-The 5x5 square combines I and J (a standard convention):
-
-```
+```text
     1  2  3  4  5
 1   A  B  C  D  E
-2   F  G  H  I  K
-3   L  M  N  O  P
-4   Q  R  S  T  U
-5   V  W  X  Y  Z
+2   F  G  H  I  J
+3   K  L  M  N  O
+4   P  Q  R  S  T
+5   U  V  W  X  Y
 ```
 
-Each letter maps to its row and column: `H` is row 2, column 3 → `23`.
+The first digit is the row and the second digit is the column.
 
-## How to Run
+Examples:
+
+```text
+H = 23
+E = 15
+L = 32
+O = 35
+
+HELLO = 23 15 32 32 35
+```
+
+**Z has no coordinate** because the workshop grid contains A-Y only. The program reports an error if Z is entered.
+
+## Run
 
 ```bash
-# Run the interactive app
-python main.py
-
-# Run the tests
-python -m pytest tests/test_polybius.py -v
-
-# Or without pytest
-python -m unittest tests.test_polybius -v
+python3 main.py
 ```
 
-## Quick Example
+## Tests
 
-```python
-from polybius import encrypt, decrypt
-
-encrypted = encrypt("HELLO")
-print(encrypted)   # 23 15 31 31 34
-
-decrypted = decrypt("23 15 31 31 34")
-print(decrypted)   # HELLO
+```bash
+python3 -m unittest discover -s tests -v
 ```
+
+## Web version
+
+The `web/` folder contains a simple browser version using HTML, CSS and JavaScript. It uses the same workshop grid.
 
 ## Files
 
-- `polybius.py` — Core cipher logic (square, encrypt, decrypt)
-- `main.py` — Interactive terminal app
-- `tests/test_polybius.py` — Unit tests
+- `polybius.py` — cipher logic
+- `main.py` — terminal interface
+- `tests/test_polybius.py` — tests
+- `web/` — browser interface
