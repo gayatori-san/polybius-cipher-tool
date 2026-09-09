@@ -1,12 +1,11 @@
-// Polybius Cipher Tool - workshop version
-// Exact 5x5 Polybius square from the workshop image.
-// Rows and columns are numbered 1-5.
+// Polybius Cipher Tool - exact workshop logic
+// The workshop combines Y and Z in the last cell: 55.
 var SQUARE = [
   ['A', 'B', 'C', 'D', 'E'],
   ['F', 'G', 'H', 'I', 'J'],
   ['K', 'L', 'M', 'N', 'O'],
   ['P', 'Q', 'R', 'S', 'T'],
-  ['U', 'V', 'W', 'X', 'Y']
+  ['U', 'V', 'W', 'X', 'YZ']
 ];
 
 var LETTER_TO_COORD = {};
@@ -15,8 +14,11 @@ var COORD_TO_LETTER = {};
 for (var r = 0; r < 5; r++) {
   for (var c = 0; c < 5; c++) {
     var coord = String(r + 1) + String(c + 1);
-    LETTER_TO_COORD[SQUARE[r][c]] = coord;
-    COORD_TO_LETTER[coord] = SQUARE[r][c];
+    var cell = SQUARE[r][c];
+    COORD_TO_LETTER[coord] = cell === 'YZ' ? 'Y/Z' : cell;
+    for (var j = 0; j < cell.length; j++) {
+      LETTER_TO_COORD[cell[j]] = coord;
+    }
   }
 }
 
@@ -26,7 +28,9 @@ function renderSquare() {
   for (var i = 1; i <= 5; i++) html += '<div class="cell header">' + i + '</div>';
   for (var row = 0; row < 5; row++) {
     html += '<div class="cell row-label">' + (row + 1) + '</div>';
-    for (var col = 0; col < 5; col++) html += '<div class="cell letter">' + SQUARE[row][col] + '</div>';
+    for (var col = 0; col < 5; col++) {
+      html += '<div class="cell letter">' + SQUARE[row][col] + '</div>';
+    }
   }
   el.innerHTML = html;
 }
@@ -37,7 +41,7 @@ function renderMappings() {
   var letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   for (var i = 0; i < letters.length; i++) {
     var letter = letters[i];
-    html += '<div class="map-item">' + letter + ' &rarr; ' + (LETTER_TO_COORD[letter] || 'no coordinate') + '</div>';
+    html += '<div class="map-item">' + letter + ' &rarr; ' + LETTER_TO_COORD[letter] + '</div>';
   }
   el.innerHTML = html;
 }
@@ -47,7 +51,6 @@ function encrypt(text) {
   var upper = text.toUpperCase();
   for (var i = 0; i < upper.length; i++) {
     var ch = upper[i];
-    if (ch === 'Z') throw new Error('Z is not present in the 5x5 grid shown in the workshop.');
     result.push(LETTER_TO_COORD[ch] || ch);
   }
   return result.join(' ');
@@ -58,8 +61,7 @@ function encryptWithSteps(text) {
   var upper = text.toUpperCase();
   for (var i = 0; i < upper.length; i++) {
     var ch = upper[i];
-    if (ch === 'Z') lines.push('Z &rarr; no coordinate');
-    else if (LETTER_TO_COORD[ch]) lines.push(ch + ' &rarr; ' + LETTER_TO_COORD[ch]);
+    if (LETTER_TO_COORD[ch]) lines.push(ch + ' &rarr; ' + LETTER_TO_COORD[ch]);
     else lines.push(ch + ' &rarr; ' + ch + ' (unchanged)');
   }
   return lines;
