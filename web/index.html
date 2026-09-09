@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Polybius Cipher Tool</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Polybius Cipher Tool</h1>
+      <p class="subtitle">Classical substitution cipher using a 5x5 grid</p>
+      <p class="warning">NOT secure for modern use. Educational purposes only.</p>
+    </header>
+
+    <section class="square-section">
+      <h2>Polybius Square</h2>
+      <div id="square-output" class="square"></div>
+    </section>
+
+    <section class="cipher-section">
+      <div class="input-group">
+        <label for="input-text">Input</label>
+        <textarea id="input-text" rows="3" placeholder="Type text to encrypt or coordinates to decrypt..."></textarea>
+      </div>
+
+      <div class="button-row">
+        <button id="btn-encrypt" class="btn btn-primary">Encrypt</button>
+        <button id="btn-decrypt" class="btn btn-secondary">Decrypt</button>
+      </div>
+
+      <div id="error-msg" class="error hidden"></div>
+
+      <div class="output-group">
+        <label>Output</label>
+        <div id="output-text" class="output"></div>
+      </div>
+
+      <div id="steps-section" class="steps hidden">
+        <h3>Encryption Steps</h3>
+        <div id="steps-output"></div>
+      </div>
+    </section>
+
+    <section class="mappings-section">
+      <h2>Letter Mappings</h2>
+      <div id="mappings-output" class="mappings"></div>
+    </section>
+
+    <footer>
+      <p>Polybius cipher — a classical cipher dating back to ancient Greece.</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,258 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Courier New', Courier, monospace;
+  background: #0a0e17;
+  color: #00ff88;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.container {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #00ff8833;
+  padding-bottom: 20px;
+}
+
+header h1 {
+  font-size: 1.8rem;
+  color: #00ff88;
+  text-shadow: 0 0 10px #00ff8844;
+  letter-spacing: 2px;
+}
+
+.subtitle {
+  color: #558877;
+  margin-top: 6px;
+  font-size: 0.85rem;
+}
+
+.warning {
+  color: #ff4444;
+  margin-top: 8px;
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+}
+
+h2 {
+  font-size: 1rem;
+  color: #00cc66;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+h3 {
+  font-size: 0.9rem;
+  color: #00cc66;
+  margin-bottom: 8px;
+}
+
+section {
+  background: #0d1220;
+  border: 1px solid #00ff8822;
+  border-radius: 6px;
+  padding: 18px;
+  margin-bottom: 20px;
+}
+
+.square {
+  display: grid;
+  grid-template-columns: auto repeat(5, 1fr);
+  gap: 2px;
+  font-size: 0.85rem;
+  max-width: 320px;
+}
+
+.square .cell {
+  text-align: center;
+  padding: 6px 4px;
+  border: 1px solid #00ff8822;
+}
+
+.square .header {
+  color: #00cc66;
+  font-weight: bold;
+}
+
+.square .row-label {
+  color: #00cc66;
+  font-weight: bold;
+  text-align: right;
+  padding-right: 8px;
+}
+
+.square .letter {
+  color: #00ff88;
+  background: #111828;
+}
+
+label {
+  display: block;
+  color: #558877;
+  font-size: 0.8rem;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+textarea {
+  width: 100%;
+  background: #111828;
+  border: 1px solid #00ff8833;
+  border-radius: 4px;
+  color: #00ff88;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1rem;
+  padding: 10px;
+  resize: vertical;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: #00ff88;
+  box-shadow: 0 0 8px #00ff8833;
+}
+
+textarea::placeholder {
+  color: #335544;
+}
+
+.button-row {
+  display: flex;
+  gap: 10px;
+  margin: 14px 0;
+}
+
+.btn {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.9rem;
+  font-weight: bold;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.btn-primary {
+  background: #00ff88;
+  color: #0a0e17;
+}
+
+.btn-primary:hover {
+  background: #00cc66;
+  box-shadow: 0 0 12px #00ff8844;
+}
+
+.btn-secondary {
+  background: #00ff8822;
+  color: #00ff88;
+  border: 1px solid #00ff8844;
+}
+
+.btn-secondary:hover {
+  background: #00ff8833;
+  box-shadow: 0 0 12px #00ff8833;
+}
+
+.error {
+  color: #ff4444;
+  font-size: 0.85rem;
+  margin: 8px 0;
+  padding: 8px 10px;
+  background: #ff444411;
+  border: 1px solid #ff444433;
+  border-radius: 4px;
+}
+
+.output {
+  background: #111828;
+  border: 1px solid #00ff8833;
+  border-radius: 4px;
+  padding: 12px;
+  font-size: 1.1rem;
+  min-height: 44px;
+  color: #00ff88;
+  word-break: break-all;
+}
+
+.steps {
+  margin-top: 14px;
+  padding: 12px;
+  background: #111828;
+  border: 1px solid #00ff8822;
+  border-radius: 4px;
+}
+
+.steps .step-line {
+  padding: 3px 0;
+  color: #00dd77;
+}
+
+.steps .step-result {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #00ff8822;
+  color: #00ff88;
+  font-weight: bold;
+}
+
+.mappings {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+  gap: 4px;
+  font-size: 0.8rem;
+}
+
+.mappings .map-item {
+  padding: 4px 6px;
+  background: #111828;
+  border: 1px solid #00ff8815;
+  border-radius: 3px;
+  color: #00dd77;
+}
+
+footer {
+  text-align: center;
+  color: #335544;
+  font-size: 0.75rem;
+  margin-top: 10px;
+  padding-top: 16px;
+  border-top: 1px solid #00ff8815;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 500px) {
+  body {
+    padding: 10px;
+  }
+
+  header h1 {
+    font-size: 1.3rem;
+  }
+
+  .square {
+    font-size: 0.75rem;
+  }
+
+  .mappings {
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+  }
+}
