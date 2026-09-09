@@ -28,24 +28,30 @@ class TestPolybius(unittest.TestCase):
         self.assertEqual(encrypt(""), "")
         self.assertEqual(decrypt(""), "")
 
-    def test_z_is_not_in_workshop_grid(self):
-        with self.assertRaises(ValueError):
-            encrypt("Z")
+    def test_y_and_z_share_55(self):
+        self.assertEqual(LETTER_TO_COORD["Y"], "55")
+        self.assertEqual(LETTER_TO_COORD["Z"], "55")
+        self.assertEqual(encrypt("YZ"), "55 55")
+        self.assertEqual(decrypt("55"), "Y/Z")
 
     def test_exact_workshop_mappings(self):
         self.assertEqual(LETTER_TO_COORD["A"], "11")
         self.assertEqual(LETTER_TO_COORD["J"], "25")
         self.assertEqual(LETTER_TO_COORD["L"], "32")
         self.assertEqual(LETTER_TO_COORD["O"], "35")
+        self.assertEqual(LETTER_TO_COORD["Y"], "55")
+        self.assertEqual(LETTER_TO_COORD["Z"], "55")
 
     def test_square(self):
         square = show_square()
         self.assertIn("A  B  C  D  E", square)
-        self.assertIn("U  V  W  X  Y", square)
+        self.assertIn("U  V  W  X  YZ", square)
 
     def test_mappings(self):
-        self.assertIn("A -> 11", show_mappings())
-        self.assertIn("Z -> not available", show_mappings())
+        mappings = show_mappings()
+        self.assertIn("A -> 11", mappings)
+        self.assertIn("Y -> 55", mappings)
+        self.assertIn("Z -> 55", mappings)
 
 
 if __name__ == "__main__":
