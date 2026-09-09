@@ -61,23 +61,31 @@ function encryptWithSteps(text) {
   var upper = text.toUpperCase();
   for (var i = 0; i < upper.length; i++) {
     var ch = upper[i];
-    if (LETTER_TO_COORD[ch]) lines.push(ch + ' &rarr; ' + LETTER_TO_COORD[ch]);
-    else lines.push(ch + ' &rarr; ' + ch + ' (unchanged)');
+    if (LETTER_TO_COORD[ch]) {
+      lines.push(ch + ' &rarr; ' + LETTER_TO_COORD[ch]);
+    } else if (ch === ' ') {
+      lines.push('SPACE &rarr; SPACE');
+    } else {
+      lines.push(ch + ' &rarr; ' + ch + ' (unchanged)');
+    }
   }
   return lines;
 }
 
 function decrypt(text) {
   if (!text.trim()) return '';
+
   var tokens = text.trim().split(/\s+/);
   var result = [];
+
   for (var i = 0; i < tokens.length; i++) {
     var token = tokens[i];
     if (!/^\d{2}$/.test(token) || !COORD_TO_LETTER[token]) {
-      throw new Error('Invalid coordinate: ' + token + '. Use values from 11 to 55.');
+      throw new Error('Invalid coordinate: ' + token + '. Enter coordinates such as 23 15 32 32 35.');
     }
     result.push(COORD_TO_LETTER[token]);
   }
+
   return result.join('');
 }
 
@@ -93,36 +101,65 @@ function clearError() {
   el.classList.add('hidden');
 }
 
+function clearOutput() {
+  document.getElementById('output-text').textContent = '';
+  document.getElementById('steps-output').innerHTML = '';
+  document.getElementById('steps-section').classList.add('hidden');
+}
+
 function handleEncrypt() {
   clearError();
+  clearOutput();
+
   var input = document.getElementById('input-text').value;
-  if (!input.trim()) return showError('Please enter some text to encrypt.');
+  if (!input.trim()) {
+    showError('Please enter some text to encrypt.');
+    return;
+  }
+
   try {
     var result = encrypt(input);
     document.getElementById('output-text').textContent = result;
+
     var steps = encryptWithSteps(input);
     var html = '';
-    for (var i = 0; i < steps.length; i++) html += '<div class="step-line">' + steps[i] + '</div>';
+    for (var i = 0; i < steps.length; i++) {
+      html += '<div class="step-line">' + steps[i] + '</div>';
+    }
     html += '<div class="step-result">Result: ' + result + '</div>';
+
     document.getElementById('steps-output').innerHTML = html;
     document.getElementById('steps-section').classList.remove('hidden');
-  } catch (error) { showError(error.message); }
+  } catch (error) {
+    showError(error.message);
+  }
 }
 
 function handleDecrypt() {
   clearError();
+  clearOutput();
+
   var input = document.getElementById('input-text').value;
-  if (!input.trim()) return showError('Please enter coordinates to decrypt.');
+  if (!input.trim()) {
+    showError('Please enter coordinates to decrypt. Example: 23 15 32 32 35');
+    return;
+  }
+
   try {
-    document.getElementById('output-text').textContent = decrypt(input);
-    document.getElementById('steps-section').classList.add('hidden');
-  } catch (error) { showError(error.message); }
+    var result = decrypt(input);
+    document.getElementById('output-text').textContent = result;
+  } catch (error) {
+    showError(error.message);
+  }
 }
 
 document.getElementById('btn-encrypt').addEventListener('click', handleEncrypt);
 document.getElementById('btn-decrypt').addEventListener('click', handleDecrypt);
 document.getElementById('input-text').addEventListener('keydown', function(e) {
-  if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); handleEncrypt(); }
+  if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+    e.preventDefault();
+    handleEncrypt();
+  }
 });
 
 renderSquare();
